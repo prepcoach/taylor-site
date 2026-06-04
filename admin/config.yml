@@ -1,0 +1,55 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - label: "Stats Bar"
+        name: "stats"
+        file: "_data/stats.json"
+        fields:
+          - { label: "Followers", name: "followers", widget: "string" }
+          - { label: "Likes", name: "likes", widget: "string" }
+          - { label: "Monthly Views", name: "monthly_views", widget: "string" }
+          - { label: "Engagement Rate", name: "engagement_rate", widget: "string" }
+
+      - label: "About Section"
+        name: "about"
+        file: "_data/about.json"
+        fields:
+          - { label: "Paragraph 1", name: "para1", widget: "text" }
+          - { label: "Paragraph 2", name: "para2", widget: "text" }
+          - { label: "Paragraph 3", name: "para3", widget: "text" }
+
+      - label: "Collaborations"
+        name: "collabs"
+        file: "_data/collabs.json"
+        fields:
+          - label: "Brand List"
+            name: "brands"
+            widget: "list"
+            field: { label: "Brand Name", name: "name", widget: "string" }
+
+      - label: "Work With Me"
+        name: "work"
+        file: "_data/work.json"
+        fields:
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Paragraph 1", name: "para1", widget: "text" }
+          - { label: "Paragraph 2", name: "para2", widget: "text" }
+          - label: "Services List"
+            name: "services"
+            widget: "list"
+            field: { label: "Service", name: "item", widget: "string" }
+
+      - label: "Social Links"
+        name: "social"
+        file: "_data/social.json"
+        fields:
+          - { label: "TikTok URL", name: "tiktok", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string" }
