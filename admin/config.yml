@@ -9,42 +9,89 @@ collections:
   - name: "site"
     label: "Site Content"
     files:
+
+      - label: "Navigation"
+        name: "nav"
+        file: "_data/nav.json"
+        fields:
+          - { label: "Brand Name (top left)", name: "brand", widget: "string", hint: "e.g. Taylor Padgett" }
+          - { label: "Work With Me Button Text", name: "cta", widget: "string" }
+
+      - label: "Hero Section"
+        name: "hero"
+        file: "_data/hero.json"
+        fields:
+          - { label: "Eyebrow Text", name: "eyebrow", widget: "string", hint: "e.g. Lifestyle · Home · DIY · Travel" }
+          - { label: "Name Line 1", name: "name1", widget: "string", hint: "e.g. Taylor" }
+          - { label: "Name Line 2", name: "name2", widget: "string", hint: "e.g. Padgett" }
+          - { label: "Subheading Label", name: "rule_label", widget: "string", hint: "Small text between lines e.g. content creator" }
+          - { label: "Tagline Paragraph", name: "tagline", widget: "text", hint: "The paragraph below the name" }
+          - { label: "Primary Button Text", name: "btn_primary", widget: "string", hint: "e.g. Work With Me" }
+          - { label: "Secondary Button Text", name: "btn_secondary", widget: "string", hint: "e.g. Watch My Content" }
+          - { label: "Profile Photo", name: "photo", widget: "image" }
+
       - label: "Stats Bar"
         name: "stats"
         file: "_data/stats.json"
         fields:
-          - { label: "Followers", name: "followers", widget: "string" }
-          - { label: "Likes", name: "likes", widget: "string" }
-          - { label: "Monthly Views", name: "monthly_views", widget: "string" }
-          - { label: "Engagement Rate", name: "engagement_rate", widget: "string" }
+          - { label: "Followers", name: "followers", widget: "string", hint: "e.g. 139K" }
+          - { label: "Followers Label", name: "followers_label", widget: "string", hint: "e.g. Followers" }
+          - { label: "Likes", name: "likes", widget: "string", hint: "e.g. 3.4M" }
+          - { label: "Likes Label", name: "likes_label", widget: "string", hint: "e.g. Likes" }
+          - { label: "Monthly Views", name: "monthly_views", widget: "string", hint: "e.g. 2M" }
+          - { label: "Monthly Views Label", name: "monthly_views_label", widget: "string", hint: "e.g. Monthly Views" }
+          - { label: "Engagement Rate", name: "engagement_rate", widget: "string", hint: "e.g. 6.2%" }
+          - { label: "Engagement Rate Label", name: "engagement_rate_label", widget: "string", hint: "e.g. Engagement Rate" }
 
       - label: "About Section"
         name: "about"
         file: "_data/about.json"
         fields:
+          - { label: "Section Eyebrow", name: "eyebrow", widget: "string", hint: "e.g. About Taylor" }
+          - { label: "Section Heading", name: "heading", widget: "string", hint: "e.g. Making every home feel like your favorite place." }
           - { label: "Paragraph 1", name: "para1", widget: "text" }
           - { label: "Paragraph 2", name: "para2", widget: "text" }
           - { label: "Paragraph 3", name: "para3", widget: "text" }
+
+      - label: "Content Categories"
+        name: "content"
+        file: "_data/content.json"
+        fields:
+          - { label: "Section Eyebrow", name: "eyebrow", widget: "string", hint: "e.g. What I Create" }
+          - { label: "Section Heading", name: "heading", widget: "string", hint: "e.g. Content you'll actually use." }
+          - label: "Categories"
+            name: "categories"
+            widget: "list"
+            hint: "The 4 content category cards"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
 
       - label: "Collaborations"
         name: "collabs"
         file: "_data/collabs.json"
         fields:
+          - { label: "Section Eyebrow", name: "eyebrow", widget: "string", hint: "e.g. Past Collaborations" }
+          - { label: "Section Heading", name: "heading", widget: "string", hint: "e.g. Brands I've worked with." }
+          - { label: "CTA Text", name: "cta", widget: "string", hint: "e.g. Interested in a collaboration? Let's connect." }
           - label: "Brand List"
             name: "brands"
             widget: "list"
+            hint: "Add or remove brand names. Each one shows as a chip on the site."
             field: { label: "Brand Name", name: "name", widget: "string" }
 
       - label: "Work With Me"
         name: "work"
         file: "_data/work.json"
         fields:
+          - { label: "Section Eyebrow", name: "eyebrow", widget: "string", hint: "e.g. Work With Me" }
           - { label: "Heading", name: "heading", widget: "string" }
           - { label: "Paragraph 1", name: "para1", widget: "text" }
           - { label: "Paragraph 2", name: "para2", widget: "text" }
           - label: "Services List"
             name: "services"
             widget: "list"
+            hint: "Bullet points under the paragraphs."
             field: { label: "Service", name: "item", widget: "string" }
 
       - label: "Social Links"
@@ -53,3 +100,10 @@ collections:
         fields:
           - { label: "TikTok URL", name: "tiktok", widget: "string" }
           - { label: "Instagram URL", name: "instagram", widget: "string" }
+
+      - label: "Footer"
+        name: "footer"
+        file: "_data/footer.json"
+        fields:
+          - { label: "Name", name: "name", widget: "string", hint: "e.g. Taylor Padgett" }
+          - { label: "Tagline", name: "tagline", widget: "string", hint: "e.g. Lifestyle · Home · DIY · Travel" }
