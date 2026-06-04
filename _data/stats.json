@@ -1,6 +1,10 @@
 {
   "followers": "139K",
+  "followers_label": "Followers",
   "likes": "3.4M",
+  "likes_label": "Likes",
   "monthly_views": "2M",
-  "engagement_rate": "6.2%"
+  "monthly_views_label": "Monthly Views",
+  "engagement_rate": "6.2%",
+  "engagement_rate_label": "Engagement Rate"
 }
