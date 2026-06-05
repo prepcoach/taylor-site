@@ -3,13 +3,17 @@
   "heading": "Brands I've worked with.",
   "cta": "Interested in a collaboration? Let's connect.",
   "brands": [
-    { "name": "Crock-Pot" },
-    { "name": "Thrive Market" },
-    { "name": "Hawks Cay Resort" },
-    { "name": "Wallblush" },
-    { "name": "Eufy" },
-    { "name": "Skylight Calendar" },
-    { "name": "Amazon Home" },
-    { "name": "Target Style" }
+    "Thrive Market",
+    "Home Depot",
+    "Eufy",
+    "Wallblush",
+    {
+      "name": "Eufy"
+    },
+    "Jiffy",
+    {
+      "name": "Amazon Home"
+    },
+    "Beachbody"
   ]
 }
