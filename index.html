@@ -412,7 +412,6 @@
     .social-btn svg { width: 16px; height: 16px; }
     .footer-copy { font-size: 12px; color: var(--fg-3); }
   </style>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -631,7 +630,152 @@
     </div>
   </footer>
 
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
+    // Netlify Identity redirect
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
+        }
+      });
+    }
+
+    // Load dynamic content from _data JSON files
+    async function loadData() {
+      try {
+        const [nav, hero, stats, about, content, collabs, work, social, footer] = await Promise.all([
+          fetch('/_data/nav.json').then(r => r.json()),
+          fetch('/_data/hero.json').then(r => r.json()),
+          fetch('/_data/stats.json').then(r => r.json()),
+          fetch('/_data/about.json').then(r => r.json()),
+          fetch('/_data/content.json').then(r => r.json()),
+          fetch('/_data/collabs.json').then(r => r.json()),
+          fetch('/_data/work.json').then(r => r.json()),
+          fetch('/_data/social.json').then(r => r.json()),
+          fetch('/_data/footer.json').then(r => r.json()),
+        ]);
+
+        // Nav
+        const navBrand = document.querySelector('.nav-brand');
+        if (navBrand && nav.brand) navBrand.textContent = nav.brand;
+        const heroCta = document.querySelector('.hero-ctas .btn-hero-primary');
+        if (heroCta && nav.cta) heroCta.textContent = nav.cta;
+
+        // Hero
+        const heroEyebrow = document.querySelector('.hero-eyebrow');
+        if (heroEyebrow && hero.eyebrow) heroEyebrow.textContent = hero.eyebrow;
+        const heroName = document.querySelector('.hero-name');
+        if (heroName && hero.name1 && hero.name2) heroName.innerHTML = `${hero.name1}<br>${hero.name2}`;
+        const heroTagline = document.querySelector('.hero-tagline');
+        if (heroTagline && hero.tagline) heroTagline.textContent = hero.tagline;
+        const btnOutline = document.querySelector('.hero-ctas .btn-outline');
+        if (btnOutline && hero.btn_secondary) {
+          // preserve the SVG icon, just update the text node
+          const textNode = [...btnOutline.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+          if (textNode) textNode.textContent = ' ' + hero.btn_secondary;
+        }
+
+        // Stats
+        const statValues = document.querySelectorAll('.stat-value');
+        const statLabels = document.querySelectorAll('.stat-label');
+        const statKeys = ['followers', 'likes', 'monthly_views', 'engagement_rate'];
+        const labelKeys = ['followers_label', 'likes_label', 'monthly_views_label', 'engagement_rate_label'];
+        statValues.forEach((el, i) => { if (stats[statKeys[i]]) el.textContent = stats[statKeys[i]]; });
+        statLabels.forEach((el, i) => { if (stats[labelKeys[i]]) el.textContent = stats[labelKeys[i]]; });
+
+        // About section
+        const sections = document.querySelectorAll('section');
+        let aboutSection = null;
+        sections.forEach(s => { if (s.querySelector('.about-body')) aboutSection = s; });
+        if (aboutSection) {
+          const eyebrow = aboutSection.querySelector('.section-eyebrow');
+          const heading = aboutSection.querySelector('.section-heading');
+          if (eyebrow && about.eyebrow) eyebrow.textContent = about.eyebrow;
+          if (heading && about.heading) heading.textContent = about.heading;
+        }
+        const aboutParas = document.querySelectorAll('.about-body p');
+        if (aboutParas[0] && about.para1) aboutParas[0].textContent = about.para1;
+        if (aboutParas[1] && about.para2) aboutParas[1].textContent = about.para2;
+        if (aboutParas[2] && about.para3) aboutParas[2].textContent = about.para3;
+
+        // Content Categories section
+        const contentSection = document.querySelector('.content-grid') ? document.querySelector('.content-grid').closest('section') : null;
+        if (contentSection) {
+          const eyebrow = contentSection.querySelector('.section-eyebrow');
+          const heading = contentSection.querySelector('.section-heading');
+          if (eyebrow && content.eyebrow) eyebrow.textContent = content.eyebrow;
+          if (heading && content.heading) heading.textContent = content.heading;
+        }
+        const cards = document.querySelectorAll('.content-card');
+        if (content.categories) {
+          content.categories.forEach((cat, i) => {
+            if (cards[i]) {
+              const titleEl = cards[i].querySelector('h3');
+              const descEl = cards[i].querySelector('p');
+              if (titleEl && cat.title) titleEl.textContent = cat.title;
+              if (descEl && cat.desc) descEl.textContent = cat.desc;
+            }
+          });
+        }
+
+        // Collabs section
+        const collabsSection = document.querySelector('.collab-chips') ? document.querySelector('.collab-chips').closest('section') : null;
+        if (collabsSection) {
+          const eyebrow = collabsSection.querySelector('.section-eyebrow');
+          const heading = collabsSection.querySelector('.section-heading');
+          const ctaBtn = collabsSection.querySelector('a.btn-primary, button.btn-primary');
+          if (eyebrow && collabs.eyebrow) eyebrow.textContent = collabs.eyebrow;
+          if (heading && collabs.heading) heading.textContent = collabs.heading;
+          if (ctaBtn && collabs.cta) ctaBtn.textContent = collabs.cta;
+        }
+        const chipsContainer = document.querySelector('.collab-chips');
+        if (chipsContainer && collabs.brands) {
+          chipsContainer.innerHTML = collabs.brands.map((b, i) => {
+            const delay = i % 4;
+            const delayClass = delay > 0 ? ` fade-d${delay}` : '';
+            return `<div class="chip fade${delayClass}">${b.name}</div>`;
+          }).join('');
+          document.querySelectorAll('.collab-chips .fade').forEach(el => observer.observe(el));
+        }
+
+        // Work With Me section
+        const workSection = document.querySelector('.work-pitch') ? document.querySelector('.work-pitch').closest('section') : null;
+        if (workSection) {
+          const eyebrow = workSection.querySelector('.section-eyebrow');
+          if (eyebrow && work.eyebrow) eyebrow.textContent = work.eyebrow;
+        }
+        const workHeading = document.querySelector('.work-pitch .section-heading');
+        if (workHeading && work.heading) workHeading.textContent = work.heading;
+        const workParas = document.querySelectorAll('.work-pitch > p');
+        if (workParas[0] && work.para1) workParas[0].textContent = work.para1;
+        if (workParas[1] && work.para2) workParas[1].textContent = work.para2;
+        const serviceList = document.querySelector('.service-list');
+        if (serviceList && work.services) {
+          serviceList.innerHTML = work.services.map(s =>
+            `<li><span class="dot"></span>${s.item}</li>`
+          ).join('');
+        }
+
+        // Social links (all of them on the page)
+        const tiktokLinks = document.querySelectorAll('a[aria-label="TikTok"]');
+        const igLinks = document.querySelectorAll('a[aria-label="Instagram"]');
+        if (social.tiktok) tiktokLinks.forEach(el => el.href = social.tiktok);
+        if (social.instagram) igLinks.forEach(el => el.href = social.instagram);
+
+        // Footer
+        const footerBrand = document.querySelector('.footer-brand');
+        const footerSub = document.querySelector('.footer-sub');
+        if (footerBrand && footer.name) footerBrand.textContent = footer.name;
+        if (footerSub && footer.tagline) footerSub.textContent = footer.tagline;
+
+      } catch(e) {
+        // If fetch fails (e.g. local dev without a server), silently fall back to hardcoded HTML
+        console.log('Data files not found, using hardcoded content.', e);
+      }
+    }
+    loadData();
+
     // Year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
@@ -640,54 +784,6 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.fade').forEach(el => observer.observe(el));
-
-    // Load CMS data from _data JSON files
-    async function loadData() {
-      try {
-        const [stats, about, collabs, work, social] = await Promise.all([
-          fetch('_data/stats.json').then(r => r.json()),
-          fetch('_data/about.json').then(r => r.json()),
-          fetch('_data/collabs.json').then(r => r.json()),
-          fetch('_data/work.json').then(r => r.json()),
-          fetch('_data/social.json').then(r => r.json()),
-        ]);
-
-        // Stats bar
-        if (document.getElementById('stat-followers'))   document.getElementById('stat-followers').textContent   = stats.followers;
-        if (document.getElementById('stat-likes'))       document.getElementById('stat-likes').textContent       = stats.likes;
-        if (document.getElementById('stat-views'))       document.getElementById('stat-views').textContent       = stats.monthly_views;
-        if (document.getElementById('stat-engagement'))  document.getElementById('stat-engagement').textContent  = stats.engagement_rate;
-
-        // About
-        if (document.getElementById('about-p1')) document.getElementById('about-p1').textContent = about.para1;
-        if (document.getElementById('about-p2')) document.getElementById('about-p2').textContent = about.para2;
-        if (document.getElementById('about-p3')) document.getElementById('about-p3').textContent = about.para3;
-
-        // Collabs
-        const collabList = document.getElementById('collab-list');
-        if (collabList && collabs.brands) {
-          collabList.innerHTML = collabs.brands.map(b => `<li>${b.name}</li>`).join('');
-        }
-
-        // Work with me
-        if (document.getElementById('work-heading')) document.getElementById('work-heading').textContent = work.heading;
-        if (document.getElementById('work-p1'))      document.getElementById('work-p1').textContent      = work.para1;
-        if (document.getElementById('work-p2'))      document.getElementById('work-p2').textContent      = work.para2;
-        const servicesList = document.getElementById('services-list');
-        if (servicesList && work.services) {
-          servicesList.innerHTML = work.services.map(s => `<li>${s.item}</li>`).join('');
-        }
-
-        // Social links
-        const tiktokEl   = document.querySelector('a[data-social="tiktok"]');
-        const igEl       = document.querySelector('a[data-social="instagram"]');
-        if (tiktokEl && social.tiktok)     tiktokEl.href     = social.tiktok;
-        if (igEl    && social.instagram)   igEl.href         = social.instagram;
-      } catch(e) {
-        console.warn('loadData: could not fetch CMS data', e);
-      }
-    }
-    loadData();
 
     // Contact form
     function handleSubmit() {
