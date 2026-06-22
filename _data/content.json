@@ -1,10 +1,22 @@
 {
-  "eyebrow": "What I Create",
-  "heading": "Content you'll actually use.",
+  "eyebrow": "What You'll Find Here",
+  "heading": "The Heart of My Content",
   "categories": [
-    { "title": "Lifestyle", "desc": "Real moments from everyday life: morning routines, family highlights, and the beauty in the ordinary." },
-    { "title": "Home & DIY", "desc": "Budget-friendly decor, room refreshes, and step-by-step DIY projects you can actually do." },
-    { "title": "Travel", "desc": "Family-friendly destinations, resort stays, and travel tips for making memories on any budget." },
-    { "title": "Recipes", "desc": "Easy weeknight dinners, crowd-pleasing dishes, and the real food this family actually eats." }
+    {
+      "title": "Lifestyle",
+      "desc": "Real moments from everyday life: morning routines, family highlights, and the beauty in the ordinary."
+    },
+    {
+      "title": "Home & DIY",
+      "desc": "Budget-friendly decor, room refreshes, and step-by-step DIY projects you can actually do."
+    },
+    {
+      "title": "Travel",
+      "desc": "Family-friendly destinations, resort stays, and travel tips for making memories on any budget."
+    },
+    {
+      "title": "Recipes",
+      "desc": "Easy weeknight dinners, crowd-pleasing dishes, and the real food this family actually eats."
+    }
   ]
 }
